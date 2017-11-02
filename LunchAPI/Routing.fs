@@ -21,6 +21,10 @@ let handleAddLunch (next: HttpFunc) (ctx : HttpContext) =
 
 let routes: HttpFunc -> HttpFunc =
     choose [
-        GET >=> route "/lunch" >=> handleLunchFilter
+        GET >=> 
+            choose [
+                route "/lunch" >=> handleLunchFilter
+                route "/" >=> text "Hello, friends!"
+            ]
         POST >=> route "/lunch/add" >=> handleAddLunch
         setStatusCode 404 >=> text "Not Found" ]
